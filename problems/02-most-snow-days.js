@@ -21,10 +21,33 @@ methods!
 
 
 function citiesWithMostSnowDays(climateData) {
-    // Your code here 
+    // Your code here
+    let allSnowDays = climateData.map(data => {
+        let {city, country, monthlyAvg} = data;
+        let snowData = {};
+        let snowTotal = 0;
+        monthlyAvg.forEach(snowAmount => snowTotal += snowAmount['snowDays']);
+        snowData['city'] = city + ', ' + country;
+        snowData['totalSnowDays'] = snowTotal;
+        return snowData;
+    })
+    let mostSnowDays = [allSnowDays[0]];
+    for(let i = 1; i < allSnowDays.length; i++) {
+        let currSnowDay = allSnowDays[i]['totalSnowDays'];
+        let maxSnowDay = mostSnowDays[mostSnowDays.length - 1]['totalSnowDays'];
+        if (currSnowDay > maxSnowDay) {
+            for (let j = 0; j <= mostSnowDays.length; j++) {
+                mostSnowDays.shift();
+            }
+            mostSnowDays.push(allSnowDays[i]);
+        } else if (currSnowDay === maxSnowDay) {
+            mostSnowDays.push(allSnowDays[i]);
+        }
+    }
+    return mostSnowDays;
 }
 
-// console.log(citiesWithMostSnowDays(climateData));
+ console.log(citiesWithMostSnowDays(climateData));
 
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS  LINE*****************/

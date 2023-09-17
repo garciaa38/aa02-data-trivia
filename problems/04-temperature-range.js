@@ -31,13 +31,46 @@ methods. Can you use helper methods to separate out the logic?
 */
 
 
-function temperatureRange(climateData) {
-  // Your code here 
-};
+ const temperatureRange = climateData => {
 
-// Your code here 
+  let allTemps = [];
+  for (let i = 0; i < climateData.length; i++) {
+    let cityTemp = findTempRange(climateData[i]);
+    //console.log(cityTemp)
+    allTemps.push(cityTemp)
+  }
+  return allTemps;
+}
 
-// console.log(temperatureRange(climateData));
+const findTempRange = (cityData) => {
+  let months = ['January', 'February', 'March',
+                'April', 'May', 'June',
+                'July', 'August', 'September',
+                'October', 'November', 'December']
+
+  let cityTempRange = {};
+  let {id, city, country, monthlyAvg} = cityData;
+
+  cityTempRange['id'] = id;
+  cityTempRange['city'] = city;
+  cityTempRange['country'] = country;
+  cityTempRange['monthlyTemperatureRange'] = [];
+
+  for (let i = 0; i < monthlyAvg.length; i++) {
+    let tempRangeData = {};
+    let currMonth = monthlyAvg[i];
+    let {high, low} = currMonth;
+    tempRangeData['month'] = months[i];
+    tempRangeData['high'] = high;
+    tempRangeData['low'] = low;
+    tempRangeData['range'] = high - low;
+    cityTempRange['monthlyTemperatureRange'].push(tempRangeData);
+   }
+   return cityTempRange;
+ };
+
+
+ console.log(temperatureRange(climateData));
 
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS  LINE*****************/

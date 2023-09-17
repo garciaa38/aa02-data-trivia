@@ -22,10 +22,37 @@ Hint: How can you identify and access the correct data for a month such as
 
 
 function leastRainfall(climateData, month) {
-    // Your code here 
+    // Your code here
+    let months = ['January', 'February', 'March',
+                'April', 'May', 'June',
+                'July', 'August', 'September',
+                'October', 'November', 'December']
+    let testedMonth = 0;
+    for (let i = 0; i < months.length; i++) {
+        if (months[i] === month) {
+            testedMonth = i;
+        }
+    }
+
+    //console.log(testedMonth);
+
+    let leastRain = [];
+
+    climateData.forEach(rainData => {
+        let {city, country, monthlyAvg} = rainData;
+        for (let i = 0; i < monthlyAvg.length; i++) {
+            if (i === testedMonth) {
+                let {rainfall} = monthlyAvg[i];
+                if (rainfall < 10) {
+                    leastRain.push(city + ', ' + country + ': ' + Math.floor(rainfall) + ' mm');
+                }
+            }
+        }
+    })
+    return leastRain;
 }
 
-// console.log(leastRainfall(climateData, "August"));
+ console.log(leastRainfall(climateData, "August"));
 
 
 

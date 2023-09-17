@@ -12,10 +12,22 @@ For example, it should return:
 */
 
 function listAllCitiesWithCountries(climateData) {
-    // Your code here 
+    // Your code here
+    let allCities = climateData.map(city => {
+        let cityAndCountry = '';
+        for (let key in city) {
+            if (key === 'city') {
+                cityAndCountry += city[key] + ', ';
+            } else if (key === 'country') {
+                cityAndCountry += city[key];
+            }
+            }
+            return cityAndCountry;
+        })
+    return allCities;
 }
 
-// console.log(listAllCitiesWithCountries(climateData));
+ //console.log(listAllCitiesWithCountries(climateData));
 
 
 
@@ -31,10 +43,13 @@ For example, it should return:
 
 
 function listAllUsCities(climateData) {
-    // Your code here 
+    // Your code here
+    let allCities = listAllCitiesWithCountries(climateData);
+    // console.log(allCities);
+    return allCities.filter(usCities => usCities.includes('United States'));
 }
-
-// console.log(listAllUsCities(climateData));
+// listAllUsCities(climateData)
+ console.log(listAllUsCities(climateData));
 
 
 
@@ -51,10 +66,22 @@ was duplicated in id 3, 7, and 9, the returned object should look like:
 
 
 function findDuplicates(climateData) {
-    // Your code here 
+    // Your code here
+    let duplicateData = {};
+    for (let i = 0; i < climateData.length; i++) {
+        let cityData = climateData[i];
+        let {city} = cityData;
+        if (duplicateData[city] === undefined) {
+        duplicateData[city] = [];
+        }
+        let {id} = cityData;
+        duplicateData[city].push(id);
+
+    }
+    return duplicateData;
 }
 
-// console.log(findDuplicates(climateData));
+ //console.log(findDuplicates(climateData));
 
 
 
@@ -73,10 +100,16 @@ but do not have to, use this method to solve this problem.
 
 
 function returnDuplicate(climateData) {
-    // Your code here 
+    // Your code here
+    let duplicateData = findDuplicates(climateData);
+    for (let key in duplicateData) {
+        if (duplicateData[key].length > 1) {
+            return climateData.find(data => data['id'] === duplicateData[key][duplicateData[key].length - 1])
+        }
+    }
 }
 
-// console.log(returnDuplicate(climateData));
+ //console.log(returnDuplicate(climateData));
 
 
 /* 05. `correctDuplicate` Correct the city name of the duplicated city.
@@ -92,11 +125,14 @@ HINT: Can you use functions you have already written to help solve this problem?
 */
 
 
-function correctDuplicate(climateData, newCityName) {
-    // Your code here 
-}
+ function correctDuplicate(climateData, newCityName) {
+     // Your code here
+     let duplicateCity = returnDuplicate(climateData);
+     duplicateCity['city'] = newCityName;
+     return duplicateCity;
+ }
 
-// console.log(correctDuplicate(climateData, "Peoria IL"));
+  //console.log(correctDuplicate(climateData, "Peoria IL"));
 
 
 

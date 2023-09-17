@@ -13,7 +13,20 @@ Notes:
 
 */
 
-// Your code here 
+// Your code here
+const chinaFinder = findChina => {
+    //let answer = findChina.filter(chinaCity => {
+        //let {country, city} = chinaCity;
+        for (let key in findChina) {
+            if (findChina[key] === 'Beijing') {
+                return findChina;
+            }
+
+        }
+    //})
+
+    //return answer;
+}
 
 
 /* When you are ready to run your function, call it inside the console.log()
@@ -21,4 +34,4 @@ below.
 
 Run your code using the command `node problems/05-choose-your-own-adventure.js`
 */
-console.log();
+console.log(chinaFinder(climateData));
